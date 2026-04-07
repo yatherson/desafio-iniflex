@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -54,7 +53,7 @@ public class Main {
         agrupados.forEach((funcao, lista) -> System.out.println(funcao + ": " + lista.stream().map(Funcionario::getNome).toList()));
         System.out.println();
 
-        // 3.8 - Aniversariantes (Uso de List.of para o filtro)
+        // 3.8 - Aniversariantes
         var mesesAlvo = List.of(Month.OCTOBER, Month.DECEMBER);
         System.out.println("--- 3.8 ---");
         funcionarios.stream()
@@ -62,7 +61,7 @@ public class Main {
                 .forEach(f -> System.out.println("Aniversariante: " + f.getNome()));
         System.out.println();
 
-        // 3.9 - Maior Idade (Uso de Sequenced Collections se estivesse ordenado, ou Comparator)
+        // 3.9 - Maior Idade
         System.out.println("--- 3.9 ---");
         funcionarios.stream()
                 .min(Comparator.comparing(Funcionario::getDataNascimento))
