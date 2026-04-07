@@ -33,32 +33,32 @@ public class Main {
         ));
 
         // 3.2 - Remoção
-        funcionarios.removeIf(f -> f.getNome().equals("João"));
+        funcionarios.removeIf(funcionario -> funcionario.getNome().equals("João"));
 
         // 3.3 - Impressão Formatada
-        var df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        var nf = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"));
+        var formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        var formatoSalario = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("pt-BR"));
 
         System.out.println("--- 3.3 ---");
-        funcionarios.forEach(f -> System.out.printf("%s | %s | %s | %s%n",
-                f.getNome(), f.getDataNascimento().format(df), nf.format(f.getSalario()), f.getFuncao()));
+        funcionarios.forEach(funcionario -> System.out.printf("%s | %s | %s | %s%n",
+                funcionario.getNome(), funcionario.getDataNascimento().format(formatoData), formatoSalario.format(funcionario.getSalario()), funcionario.getFuncao()));
         System.out.println();
 
         // 3.4 - Aumento
-        funcionarios.forEach(f -> f.setSalario(f.getSalario().multiply(new BigDecimal("1.10"))));
+        funcionarios.forEach(funcionario -> funcionario.setSalario(funcionario.getSalario().multiply(new BigDecimal("1.10"))));
 
         // 3.5 e 3.6 - Agrupamento
-        var agrupados = funcionarios.stream().collect(Collectors.groupingBy(Funcionario::getFuncao));
+        var agrupamentoFuncionarioPorFuncao = funcionarios.stream().collect(Collectors.groupingBy(Funcionario::getFuncao));
         System.out.println("--- 3.6 ---");
-        agrupados.forEach((funcao, lista) -> System.out.println(funcao + ": " + lista.stream().map(Funcionario::getNome).toList()));
+        agrupamentoFuncionarioPorFuncao.forEach((funcao, lista) -> System.out.println(funcao + ": " + lista.stream().map(Funcionario::getNome).toList()));
         System.out.println();
 
         // 3.8 - Aniversariantes
         var mesesAlvo = List.of(Month.OCTOBER, Month.DECEMBER);
         System.out.println("--- 3.8 ---");
         funcionarios.stream()
-                .filter(f -> mesesAlvo.contains(f.getDataNascimento().getMonth()))
-                .forEach(f -> System.out.println("Aniversariante: " + f.getNome()));
+                .filter(funcionario -> mesesAlvo.contains(funcionario.getDataNascimento().getMonth()))
+                .forEach(funcionario -> System.out.println("Aniversariante: " + funcionario.getNome()));
         System.out.println();
 
         // 3.9 - Maior Idade
@@ -80,13 +80,13 @@ public class Main {
         // 3.11 - Total Salários
         var total = funcionarios.stream().map(Funcionario::getSalario).reduce(BigDecimal.ZERO, BigDecimal::add);
         System.out.println("--- 3.11 ---");
-        System.out.println("Total: " + nf.format(total));
+        System.out.println("Total: " + formatoSalario.format(total));
         System.out.println();
 
         // 3.12 - Salários Mínimos
         BigDecimal min = new BigDecimal("1212.00");
         System.out.println("--- 3.12 ---");
-        funcionarios.forEach(f -> System.out.println(f.getNome() + " ganha " + f.getSalario().divide(min, 1, RoundingMode.DOWN) + " salários mínimos."));
+        funcionarios.forEach(funcionario -> System.out.println(funcionario.getNome() + " ganha " + funcionario.getSalario().divide(min, 1, RoundingMode.DOWN) + " salários mínimos."));
         System.out.println();
     }
 
